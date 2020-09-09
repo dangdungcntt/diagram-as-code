@@ -24,6 +24,16 @@ foreach ([__DIR__, __DIR__.'/../../..'] as $file) {
 
 unset($argv[0]);
 
+if (!isset($argv[1])) {
+    echo 'Empty diagram config'.PHP_EOL;
+    return;
+}
+
+if (str_starts_with($argv[1], '--root=')) {
+    $_SERVER['ROOT_DIR'] = str_replace('--root=', '', $argv[1]);
+    unset($argv[1]);
+}
+
 /**
  * @var \Nddcoder\Base\Diagram $diagram
  */
