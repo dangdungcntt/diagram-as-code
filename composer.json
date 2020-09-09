@@ -1,5 +1,5 @@
 {
-    "name": "nddcoder/diagrams-as-code",
+    "name": "nddcoder/diagram-as-code",
     "bin": ["dac"],
     "require": {
         "php": "^7.4",
