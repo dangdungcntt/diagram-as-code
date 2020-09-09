@@ -15,8 +15,8 @@ foreach (array(
 
 require DAC_COMPOSER_INSTALL;
 
-foreach ([__DIR__, __DIR__.'/../../../'] as $file) {
-    if (file_exists($file)) {
+foreach ([__DIR__, __DIR__.'/../../..'] as $file) {
+    if (file_exists($file.'/.env')) {
         Dotenv::createMutable($file)->load();
         break;
     }
