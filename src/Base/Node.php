@@ -14,18 +14,21 @@ abstract class Node extends \Alom\Graphviz\Node
     {
         $image = $this->getImage();
 
-        $attributes = array_merge($this->getDefaultAttributes(), ['label' => $label], $attributes);
+        $attributes  = array_merge($this->getDefaultAttributes(), ['label' => $label], $attributes);
+        $imagePrefix = empty($_ENV['ROOT_DIR']) ? '' : rtrim($_ENV['ROOT_DIR'], '/').'/';
 
         if (!empty($image)) {
             $attributes = array_merge($attributes, [
                 'shape'  => 'none',
                 'height' => 2,
-                'image'  => $image
+                'image'  => $imagePrefix.$image
             ]);
         }
 
         parent::__construct($id, $attributes, $parent);
     }
+
+    abstract public function getImage();
 
     protected function getDefaultAttributes()
     {
@@ -33,6 +36,4 @@ abstract class Node extends \Alom\Graphviz\Node
 //            'fontcolor' => '#ffffff'
         ];
     }
-
-    abstract public function getImage();
 }
