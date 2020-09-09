@@ -3,7 +3,9 @@
 
 use Dotenv\Dotenv;
 
-foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
+foreach (array(
+             __DIR__.'/../../autoload.php', __DIR__.'/../vendor/autoload.php', __DIR__.'/vendor/autoload.php'
+         ) as $file) {
     if (file_exists($file)) {
         define('DAC_COMPOSER_INSTALL', $file);
 
@@ -13,10 +15,12 @@ foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.p
 
 require DAC_COMPOSER_INSTALL;
 
-Dotenv::createMutable([
-    __DIR__,
-    __DIR__ . '/../../'
-])->load();
+foreach ([__DIR__, __DIR__.'/../../'] as $file) {
+    if (file_exists($file)) {
+        Dotenv::createMutable($file)->load();
+        break;
+    }
+}
 
 unset($argv[0]);
 
