@@ -1,0 +1,13 @@
+<?php
+
+namespace Nddcoder\Diagrams\{namespace};
+
+use Nddcoder\Diagrams\{abstract_namespace};
+
+class {class_name} extends {abstract}
+{
+    public function getImage()
+    {
+        return '{image_path}';
+    }
+}

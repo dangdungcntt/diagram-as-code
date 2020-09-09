@@ -1,0 +1,10 @@
+<?php
+
+namespace Nddcoder\Diagrams\{namespace};
+
+use Nddcoder\Base\Node;
+
+{is_abstract}class {class_name} extends Node
+{
+{get_image}
+}

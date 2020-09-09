@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__.'/vendor/autoload.php';
+
+unset($argv[0]);
+
+/**
+ * @var \Nddcoder\Base\Diagram $diagram
+ */
+$diagram = null;
+
+foreach ($argv as $file) {
+    if (empty($diagram)) {
+        $diagram = require($file);
+    } else {
+        /**
+         * @var \Nddcoder\Base\Diagram $subDiagram
+         */
+        $subDiagram = require($file);
+        $diagram->mergeInstructions($subDiagram->getInstructions());
+    }
+}
+
+if (empty($diagram)) {
+    echo 'Empty diagram config'.PHP_EOL;
+} else {
+    echo $diagram->render();
+}
