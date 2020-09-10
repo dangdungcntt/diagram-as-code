@@ -3,9 +3,36 @@
 
 define('__ROOT__', __DIR__);
 
-foreach (array(
-             __DIR__.'/../../autoload.php', __DIR__.'/../vendor/autoload.php', __DIR__.'/vendor/autoload.php'
-         ) as $file) {
+function parseInput($argv, $opt) {
+    $args = [];
+    $options = getopt(...$opt);
+
+    unset($argv[0]);
+
+    foreach ($argv as $item) {
+        if (strpos($item, '-') !== 0) {
+            $args[] = $item;
+        }
+    }
+
+    return [$args, $options];
+}
+
+function findDiagramFile($dir)
+{
+    $dir = rtrim($dir, '/');
+    if (file_exists($file = $dir.'/diagram.php')) {
+        return $file;
+    }
+
+    if (file_exists($file = $dir.'/.diagram/diagram.php')) {
+        return $file;
+    }
+
+    return null;
+}
+
+foreach ([__DIR__.'/../../autoload.php', __DIR__.'/../vendor/autoload.php', __DIR__.'/vendor/autoload.php'] as $file) {
     if (file_exists($file)) {
         define('DAC_COMPOSER_INSTALL', $file);
 
@@ -15,16 +42,42 @@ foreach (array(
 
 require DAC_COMPOSER_INSTALL;
 
-unset($argv[0]);
+[$args, $options] = parseInput($argv, ['r:a', ['root:', 'all']]);
 
-if (!isset($argv[1])) {
-    echo 'Empty diagram config'.PHP_EOL;
-    return;
+if (isset($options['root'])) {
+    $_SERVER['ROOT_DIR'] = is_array($options['root']) ? $options['root'][0] : $options['root'];
 }
 
-if (strpos($argv[1], '--root=') === 0) {
-    $_SERVER['ROOT_DIR'] = str_replace('--root=', '', $argv[1]);
-    unset($argv[1]);
+$files = [];
+
+if (empty($args)) {
+    if ($file = findDiagramFile(getcwd())) {
+        $files[] = $file;
+    }
+} else {
+    foreach ($args as $arg) {
+        if (!is_dir($arg)) {
+            $files[] = $arg;
+            continue;
+        }
+
+        if (isset($options['all'])) {
+            $items = scandir($arg);
+            unset($items[0]);
+            unset($items[1]);
+
+            foreach ($items as $item) {
+                if (is_dir($item) && $file = findDiagramFile($item)) {
+                    $files[] = $file;
+                }
+            }
+            continue;
+        }
+
+        if ($file = findDiagramFile($arg)) {
+            $files[] = $file;
+        }
+    }
 }
 
 /**
@@ -32,7 +85,7 @@ if (strpos($argv[1], '--root=') === 0) {
  */
 $diagram = null;
 
-foreach ($argv as $file) {
+foreach ($files as $file) {
     if (empty($diagram)) {
         $diagram = require($file);
     } else {
