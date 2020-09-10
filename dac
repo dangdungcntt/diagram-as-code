@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Dotenv\Dotenv;
+define('__ROOT__', __DIR__);
 
 foreach (array(
              __DIR__.'/../../autoload.php', __DIR__.'/../vendor/autoload.php', __DIR__.'/vendor/autoload.php'
@@ -15,13 +15,6 @@ foreach (array(
 
 require DAC_COMPOSER_INSTALL;
 
-foreach ([__DIR__, __DIR__.'/../../..'] as $file) {
-    if (file_exists($file.'/.env')) {
-        Dotenv::createMutable($file)->load();
-        break;
-    }
-}
-
 unset($argv[0]);
 
 if (!isset($argv[1])) {
@@ -29,13 +22,13 @@ if (!isset($argv[1])) {
     return;
 }
 
-if (str_starts_with($argv[1], '--root=')) {
+if (strpos($argv[1], '--root=') === 0) {
     $_SERVER['ROOT_DIR'] = str_replace('--root=', '', $argv[1]);
     unset($argv[1]);
 }
 
 /**
- * @var \Nddcoder\Base\Diagram $diagram
+ * @var \Nddcoder\Dac\Base\Diagram $diagram
  */
 $diagram = null;
 
@@ -44,7 +37,7 @@ foreach ($argv as $file) {
         $diagram = require($file);
     } else {
         /**
-         * @var \Nddcoder\Base\Diagram $subDiagram
+         * @var \Nddcoder\Dac\Base\Diagram $subDiagram
          */
         $subDiagram = require($file);
         $diagram->mergeInstructions($subDiagram->getInstructions());

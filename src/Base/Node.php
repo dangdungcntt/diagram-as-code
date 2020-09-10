@@ -15,10 +15,9 @@ abstract class Node extends \Alom\Graphviz\Node
         $image = $this->getImage();
 
         $attributes  = array_merge($this->getDefaultAttributes(), ['label' => $label], $attributes);
-        $imagePrefix = $_ENV['ROOT_DIR'] ?? $_SERVER['ROOT_DIR'] ?? null;
-        $imagePrefix = empty($imagePrefix) ? '' : rtrim($imagePrefix, '/').'/';
 
         if (!empty($image)) {
+            $imagePrefix = rtrim($_SERVER['ROOT_DIR'] ?? __ROOT__, '/').'/';
             $attributes = array_merge($attributes, [
                 'shape'  => 'none',
                 'height' => 2,

@@ -72,11 +72,10 @@ digraph G {
 Using Docker
 
 ```bash
-echo "ROOT_DIR=/dot" > .env
-vendor/bin/dac demo.php | docker run --rm -i -v $(pwd):/dot nshine/dot > demo.png
+vendor/bin/dac --root=/dot/vendor/nddcoder/diagram-as-code demo.php | docker run --rm -i -v $(pwd):/dot nshine/dot > demo.png
 ```
 
-Use `dot` command from `graphviz`. (Make sure you remove `ROOT_DIR` from `.env` file)
+Use `dot` command from `graphviz`.
 
 ```bash
 vendor/bin/dac demo.php | dot -Tpng > demo.png
