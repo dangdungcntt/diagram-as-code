@@ -54,12 +54,20 @@ class Diagram extends Digraph
     {
         if (is_array($from)) {
             foreach ($from as $item) {
+                if (is_array($item) && isset($item[1])) {
+                    $this->connect($item[0], $to, $item[1] ?? $edgeAttrs);
+                    continue;
+                }
                 $this->connect($item, $to, $edgeAttrs);
             }
             return $this;
         }
         if (is_array($to)) {
             foreach ($to as $item) {
+                if (is_array($item) && isset($item[1])) {
+                    $this->connect($from, $item[0], $item[1]);
+                    continue;
+                }
                 $this->connect($from, $item, $edgeAttrs);
             }
             return $this;

@@ -17,7 +17,7 @@ use Nddcoder\Dac\Diagram\Onprem\Compute\Server;
 use Nddcoder\Dac\Diagram\Onprem\Database\Mysql;
 use Nddcoder\Dac\Diagram\Onprem\Queue\Kafka;
 
-//php dac examples/example-01.php | docker run --rm -i -v $(pwd):/dot nshine/dot > examples/example-01.png
+//php dac --root=/dot examples/01-more-complex.php | docker run --rm -i -v $(pwd):/dot nshine/dot > examples/output/01.png
 return Diagram::create('G', 'Demo Diagram As Code')
     ->append(
         Cluster::create('kafka', 'Kafka Cluster (3 broker)')
@@ -38,6 +38,8 @@ return Diagram::create('G', 'Demo Diagram As Code')
             ])
     )
     ->append($database = Mysql::create('mysql', 'Mysql'))
-    ->connect($database, $consumer, EdgeStyle::create()->style(Style::BOLD)->label('READ'))
-    ->connect($kafka, $consumer, EdgeStyle::create()->style(Style::DOTTED)->color(Color::BROWN))
+    ->connect([
+        [$database, EdgeStyle::create()->style(Style::BOLD)->label('READ')],
+        $kafka,
+    ], $consumer, EdgeStyle::create()->style(Style::DOTTED)->color(Color::BROWN))
     ->connect($consumer, $partners, EdgeStyle::create()->color(Color::DARKGREEN)->label('SEND'));

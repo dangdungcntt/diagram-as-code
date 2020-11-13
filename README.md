@@ -85,6 +85,27 @@ vendor/bin/dac demo.php | dot -Tpng > demo.png
 
 ![Demo Diagram As Code](examples/output/00.png)
 
+## Merge multiple files
+
+Example for following directory struct
+
+```bash
+projects/
+  project-a/
+    diagram.php
+  project-b/
+    .diagram/
+      diagram.php
+  ...
+  vendor
+```
+
+```bash
+vendor/bin/dac -a .
+```
+
+This command will lookup for `diagram.php` or `.diagram/diagram.php` file in all sub folders
+
 ## Sample
 
 * [examples/00-readme.php](examples/00-readme.php): example from README

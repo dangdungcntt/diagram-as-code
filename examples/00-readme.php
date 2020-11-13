@@ -9,6 +9,7 @@ use Nddcoder\Dac\Diagram\Aws\Compute\Ec2;
 use Nddcoder\Dac\Diagram\Onprem\Database\Mysql;
 use Nddcoder\Dac\Diagram\Onprem\Queue\Kafka;
 
+//php dac --root=/dot examples/00-readme.php | docker run --rm -i -v $(pwd):/dot nshine/dot > examples/output/00.png
 return Diagram::create('G', 'Demo Diagram As Code')
     ->direction(Style::DIR_LR)
     ->append(
