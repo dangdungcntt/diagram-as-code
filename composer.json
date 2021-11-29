@@ -4,7 +4,7 @@
         "dac"
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "alom/graphviz": "^1.1"
     },
     "autoload": {

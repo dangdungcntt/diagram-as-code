@@ -2,3 +2,4 @@
 vendor
 graph.png
 .env
+composer.lock
