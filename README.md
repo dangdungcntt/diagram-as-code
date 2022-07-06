@@ -101,7 +101,7 @@ projects/
 ```
 
 ```bash
-vendor/bin/dac -a .
+vendor/bin/dac --all .
 ```
 
 This command will lookup for `diagram.php` or `.diagram/diagram.php` file in all sub folders
