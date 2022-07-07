@@ -1,9 +1,10 @@
 #!/usr/bin/env php
 <?php
 
-define('__ROOT__', __DIR__);
+const __ROOT__ = __DIR__;
 
-function parseInput($argv, $opt) {
+function parseInput($argv, $opt): array
+{
     $args = [];
     $options = getopt(...$opt);
 
@@ -18,7 +19,7 @@ function parseInput($argv, $opt) {
     return [$args, $options];
 }
 
-function findDiagramFile($dir)
+function findDiagramFile($dir): ?string
 {
     $dir = rtrim($dir, '/');
     if (file_exists($file = $dir.'/diagram.php')) {
@@ -42,7 +43,7 @@ foreach ([__DIR__.'/../../autoload.php', __DIR__.'/../vendor/autoload.php', __DI
 
 require DAC_COMPOSER_INSTALL;
 
-[$args, $options] = parseInput($argv, ['r:a', ['root:', 'all']]);
+[$args, $options] = parseInput($argv, ['', ['root::', 'all', 'name::']]);
 
 if (isset($options['root'])) {
     $_SERVER['ROOT_DIR'] = is_array($options['root']) ? $options['root'][0] : $options['root'];
@@ -100,5 +101,8 @@ foreach ($files as $file) {
 if (empty($diagram)) {
     echo 'Empty diagram config'.PHP_EOL;
 } else {
+    if (isset($options['name'])) {
+        $diagram->set('label', is_array($options['name']) ? $options['name'][0] : $options['name']);
+    }
     echo $diagram->render();
 }

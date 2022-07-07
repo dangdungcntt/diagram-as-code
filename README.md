@@ -87,6 +87,8 @@ vendor/bin/dac demo.php | dot -Tpng > demo.png
 
 ## Merge multiple files
 
+If you want to merge multiple files, you can use `--all` option
+
 Example for following directory struct
 
 ```bash
@@ -104,7 +106,13 @@ projects/
 vendor/bin/dac --all .
 ```
 
-This command will lookup for `diagram.php` or `.diagram/diagram.php` file in all sub folders
+This command will look up for `diagram.php` or `.diagram/diagram.php` file in all sub folders
+
+If you want set name of output diagram, you can use `--name` option
+
+```bash
+vendor/bin/dac --all --name=demo .
+```
 
 ## Sample
 
