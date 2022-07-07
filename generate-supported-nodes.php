@@ -1,8 +1,8 @@
 <?php
 
-use Nddcoder\Base\Cluster;
-use Nddcoder\Base\Diagram;
-use Nddcoder\Base\Style\Style;
+use Nddcoder\Dac\Base\Cluster;
+use Nddcoder\Dac\Base\Diagram;
+use Nddcoder\Dac\Base\Style\Style;
 
 require_once __DIR__ . '/vendor/autoload.php';
 

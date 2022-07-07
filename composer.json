@@ -8,9 +8,6 @@
         "alom/graphviz": "^1.1"
     },
     "autoload": {
-        "classmap": [
-            "src/Diagram"
-        ],
         "psr-4": {
             "Nddcoder\\Dac\\": "src"
         }

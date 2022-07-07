@@ -1,8 +1,8 @@
 <?php
 
-namespace Nddcoder\Diagrams\{namespace};
+namespace Nddcoder\Dac\Diagram\{namespace};
 
-use Nddcoder\Diagrams\{abstract_namespace};
+use Nddcoder\Dac\Diagram\{abstract_namespace};
 
 class {class_name} extends {abstract}
 {
